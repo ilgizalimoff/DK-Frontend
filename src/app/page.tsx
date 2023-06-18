@@ -44,7 +44,7 @@ const Home = observer(() => {
               </h2>
 
               <h2 className={styles.postAutorName}>
-                Автор:  {usersStore.users.filter(user => post.userId === user.id)[0].name}
+                Автор:  {usersStore.users.find(user => post.userId === user.id)?.name}
               </h2>
 
               <Link href={'/posts/' + post.id}>
