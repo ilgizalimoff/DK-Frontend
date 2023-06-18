@@ -13,6 +13,10 @@ class Pagination {
         this._page = page
     }
 
+    setLimit(limit: number) {
+        this._limit = limit
+    }
+
     setTotalCount(totalCount: number) {
         this._totalCount = totalCount
     }

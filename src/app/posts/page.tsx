@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import styles from './page.module.scss'
 import Link from 'next/link'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import AddNewPost from '@/components/AddNewPost/AddNewPost';
 import Pagination from '@/components/Pagination/Pagination';
 import postsStore from '@/store/posts'
@@ -11,10 +11,22 @@ import paginationStore from '@/store/pagination'
 import usersStore from '@/store/users'
 import { observer } from 'mobx-react-lite';
 
-const Home = observer(() => {
+const Posts = observer(() => {
   const [visible, setVisible] = useState(false)
+
   const startIndex = (paginationStore.page - 1) * paginationStore.limit;
   const endIndex = startIndex + paginationStore.limit;
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const limit = params.get('_limit');
+    const page = params.get('_page')
+
+    if (limit && page) {
+      paginationStore.setLimit(Number(limit));
+      paginationStore.setPage(Number(page));
+    }
+  }, [])
 
   return (
     <div className={styles.container}>
@@ -22,8 +34,7 @@ const Home = observer(() => {
         visible={visible}
         setVisible={setVisible} />
 
-      <button
-        className={styles.addBtn}
+      <button className={styles.addBtn}
         onClick={() => setVisible(true)}>
         Добавить пост
       </button>
@@ -57,4 +68,4 @@ const Home = observer(() => {
   )
 })
 
-export default Home
+export default Posts
