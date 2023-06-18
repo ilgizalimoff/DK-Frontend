@@ -22,10 +22,8 @@ const Posts = observer(() => {
     const limit = params.get('_limit');
     const page = params.get('_page')
 
-    if (limit && page) {
-      paginationStore.setLimit(Number(limit));
-      paginationStore.setPage(Number(page));
-    }
+    limit && paginationStore.setLimit(Number(limit));
+    page && paginationStore.setPage(Number(page));
   }, [])
 
   return (
